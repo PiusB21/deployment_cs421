@@ -1,9 +1,6 @@
 package com.example.deployment_task.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,6 +19,8 @@ public class Student {
     private String first_name;
     private String last_name;
     private String email;
+
+    @Column(unique = true, nullable = false)
     private String regNo;
     private String program;
 }
