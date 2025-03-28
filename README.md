@@ -3,6 +3,7 @@
 The Springboot application provides endpoints: /subject and /student to perform CRUD operations on data from a Postgres database  
 
 The hosted endpoints are:
+
 -to get the list of students : http://16.171.35.83:8080/api/v1/student/all 
 
 -to get the list of subjects : http://16.171.35.83:8080/api/v1/subject/all
