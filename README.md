@@ -69,4 +69,45 @@ Disadvantages:
     - Backup takes longer and requires more storage space than incremental backup
     - Slow and complex to restore compared to full backups
 
+The following are the procedures for building Docker images:
+NB:You'll need to install docker if it is not present, the easiest installation method is by using the convenience script : https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script
 
+1. Prepare Dockerfile, preferably in the root directory of the project(where pom.xml is)
+specifying base images, dependencies, environment variables, exposed ports, and commands to run the application
+
+2. having the jar file of the application, build and run the docker image with the commands : 
+docker build -t <your-dockerhub-username>/<your-image-name>:<tag> 
+docker run -p 8080:8080 <your-dockerhub-username>/<your-image-name>
+
+
+Procedures for deploying and managing containers using Docker Compose.
+NB: You will need to install docker-compose standalone or docker compose plugin 
+check site : https://docs.docker.com/compose/install/linux/#install-using-the-repository
+
+1. Prepare the docker-compose.yml file like the one in springboot root directory
+specifying all required services whose containers will be run also specify networking, port mappings, volumes, and environment variables.
+
+2. on our AWS instance you will need to add a security group for the port that will be exposed for the application, i chose to expose 8081 since 8080 was already in use
+
+ Troubleshooting Tips
+
+    Port Already in Use Error
+
+        Cause: Port 5432 or 8080 already used by another service. Fix: Stop conflicting services (sudo lsof -i :5432) or change ports in docker-compose.yml.
+
+    Database Connection Errors
+
+        Cause: Spring Boot cannot connect to Postgres. Fix: Ensure Postgres container is up and reachable using service name postgres.
+
+    Can't Access API from Browser
+
+        Cause: AWS Security Group blocks port 8080. Fix: Open inbound rule on EC2 to allow 8080 from 0.0.0.0/0.
+
+    Docker Image Push Denied
+
+        Cause: Wrong login or wrong image tagging. 
+        
+        Fix:
+        docker login
+        docker tag local-image your-dockerhub-username/image-name:tag
+        docker push your-dockerhub-username/image-name:tag
