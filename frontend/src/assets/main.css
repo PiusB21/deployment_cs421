@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+
+:root {
+  --pri: #1867c0;
+  --sec: #eff6ff;
+}
